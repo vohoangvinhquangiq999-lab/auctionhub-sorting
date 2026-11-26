@@ -4,7 +4,7 @@
 
 **A. Insertion Sort — Live Auction Monitor.**
 Bids arrive almost in order (each ~0.1% above the previous), so every new element has to move only a few positions left. Insertion sort does work proportional to the number of inversions: O(n + I), which is O(n) when each element is displaced by at most k places (O(n·k)). It is also in-place, stable (equal amounts keep their arrival order) and works online, because a new bid can be inserted into an already sorted prefix.
-*Measured:* 100,000 near-sorted bids sorted in ≈ 1.5 ms, whereas 10,000 *random* bids took ≈ 250 ms (same code) — the O(n²) behaviour only appears when the data is not nearly sorted.
+*Measured:* 100,000 near-sorted bids sorted in ≈ 1.5 ms, whereas 10,000 *random* bids took ≈ 270 ms (same code) — the O(n²) behaviour only appears when the data is not nearly sorted.
 
 **B. Selection Sort — Top-K Bid Finder.**
 Each pass selects the maximum of the unsorted suffix and puts it at the front, so after K passes the first K positions already hold the Top-K bids; for "Top 3" we only need 3 passes = O(K·n). It does at most n−1 swaps (one per pass), which is the fewest writes among the simple sorts — useful when moving a `Bid` (with a `string`) is expensive. Downsides: always Θ(n²) comparisons and not stable, so it is only appropriate for small sets or small K.
@@ -24,9 +24,9 @@ Quick sort (median-of-three, Lomuto) on 100,000 random bids (`std::mt19937`, see
 
 | Run | Time |
 |---|---|
-| 1 | 30.0 ms |
-| 2 | 27.3 ms |
-| 3 | 27.9 ms |
+| 1 | 39.5 ms |
+| 2 | 39.6 ms |
+| 3 | 39.6 ms |
 
 Output verified sorted (amount, then timestamp) and identical to a `std::sort` reference. Already-sorted and reverse-sorted 100k inputs took ≈ 12 ms and ≈ 24 ms — no blow-up.
 *(Numbers are from my test machine; replace with your own run and put the screenshot in `screenshot_runtime.png`.)*
